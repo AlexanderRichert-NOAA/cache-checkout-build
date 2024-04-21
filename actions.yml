@@ -1,0 +1,38 @@
+# Alex Richert, April 2024
+name: 'cache-checkout-build'
+description: 'Cache, check out, and build CMake package'
+
+inputs:
+  package-name:
+    required: true
+  package-org:
+    required: true
+  git-ref:
+    default: develop
+  cmake-args:
+    default: ""
+  repo-cache:
+    description: 'Cache built packages through "actions/cache"'
+    default: false
+
+runs:
+  using: "composite"
+  steps:
+    - name: cache-step
+      uses: actions/cache@v4
+      if: inputs.repo-cache
+      with:
+        path: nceplibs/${{ inputs.package-name}}
+        key: ${{ inputs.package-name }}-
+    - name: "Check out '${{ inputs.package-name }}'"
+      uses: actions/checkout@v4
+      if: steps.cache-step.outputs.cache-hit != 'true'
+      with:
+        repository: ${{ inputs.package-org }}/${{ inputs.package-name }}
+        path: nceplib-src/${{ inputs.package-name }}-${{ inputs.git-ref }}-${{ inputs.cmake-args }}
+        ref: inputs.git-ref
+    - name: "Build '${{ inputs.package-name }}'"
+      if: steps.cache-step.outputs.cache-hit != 'true'
+      run: |
+        cd nceplibs-src/${{ inputs.package-name }}
+        cmake -B build -DCMAKE_INSTALL_PREFIX=$GITHUB_WORKSPACE/nceplibs/${{ inputs.package-name }} ${{ inputs.cmake-args }}
