@@ -30,7 +30,7 @@ runs:
       with:
         repository: ${{ inputs.package-org }}/${{ inputs.package-name }}
         path: nceplib-src/${{ inputs.package-name }}-${{ inputs.git-ref }}-${{ inputs.cmake-args }}
-        ref: inputs.git-ref
+        ref: ${{ inputs.git-ref }}
     - name: "Build '${{ inputs.package-name }}'"
       if: steps.cache-step.outputs.cache-hit != 'true'
       shell: bash
