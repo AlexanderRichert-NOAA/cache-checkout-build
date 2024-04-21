@@ -1,3 +1,5 @@
+# This actions.yml provides caching, check out, and building for CMake-based
+# packages, and is intended for use with the build-nceplibs Action.
 # Alex Richert, April 2024
 name: 'cache-checkout-build'
 description: 'Cache, check out, and build CMake package'
