@@ -14,6 +14,8 @@ inputs:
   repo-cache:
     description: 'Cache built packages through "actions/cache"'
     default: false
+  root-path:
+    default: ${{ github.workspace }}
 
 runs:
   using: "composite"
@@ -22,18 +24,18 @@ runs:
       uses: actions/cache@v4
       if: inputs.repo-cache
       with:
-        path: nceplibs/${{ inputs.package-name}}
+        path: ${{ inputs.root-path}}/nceplibs/${{ inputs.package-name}}
         key: ${{ inputs.package-name }}-
     - name: "Check out '${{ inputs.package-name }}'"
       uses: actions/checkout@v4
       if: steps.cache-step.outputs.cache-hit != 'true'
       with:
         repository: ${{ inputs.package-org }}/${{ inputs.package-name }}
-        path: nceplib-src/${{ inputs.package-name }}-${{ inputs.git-ref }}-${{ inputs.cmake-args }}
+        path: ${{ inputs.root-path }}/nceplib-src/${{ inputs.package-name }}-${{ inputs.git-ref }}-${{ inputs.cmake-args }}
         ref: ${{ inputs.git-ref }}
     - name: "Build '${{ inputs.package-name }}'"
       if: steps.cache-step.outputs.cache-hit != 'true'
       shell: bash
       run: |
-        cd $GITHUB_WORKSPACE/nceplibs-src/${{ inputs.package-name }}
-        cmake -B build -DCMAKE_INSTALL_PREFIX=$GITHUB_WORKSPACE/nceplibs/${{ inputs.package-name }} ${{ inputs.cmake-args }}
+        cd ${{ inputs.root-path }}/nceplibs-src/${{ inputs.package-name }}
+        cmake -B build -DCMAKE_INSTALL_PREFIX=${{ inputs.root-path }}/nceplibs/${{ inputs.package-name }} ${{ inputs.cmake-args }}
