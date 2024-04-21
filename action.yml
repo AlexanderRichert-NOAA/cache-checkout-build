@@ -31,7 +31,7 @@ runs:
       if: steps.cache-step.outputs.cache-hit != 'true'
       with:
         repository: ${{ inputs.package-org }}/${{ inputs.package-name }}
-        path: ${{ inputs.root-path }}/nceplib-src/${{ inputs.package-name }}
+        path: ${{ inputs.root-path }}/nceplibs-src/${{ inputs.package-name }}
         ref: ${{ inputs.git-ref }}
     - name: "Build '${{ inputs.package-name }}'"
       if: steps.cache-step.outputs.cache-hit != 'true'
