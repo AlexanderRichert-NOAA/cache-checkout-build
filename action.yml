@@ -24,7 +24,7 @@ runs:
       uses: actions/cache@v4
       if: inputs.repo-cache
       with:
-        path: ${{ inputs.root-path}}/nceplibs/${{ inputs.package-name}}
+        path: ${{ inputs.root-path }}/nceplibs/${{ inputs.package-name }}
         key: ${{ inputs.package-name }}-${{ inputs.git-ref }}-${{ inputs.cmake-args }}
     - name: "Check out '${{ inputs.package-name }}'"
       uses: actions/checkout@v4
@@ -39,3 +39,5 @@ runs:
       run: |
         cd ${{ inputs.root-path }}/nceplibs-src/${{ inputs.package-name }}
         cmake -B build -DCMAKE_INSTALL_PREFIX=${{ inputs.root-path }}/nceplibs/${{ inputs.package-name }} ${{ inputs.cmake-args }}
+        cmake --build build
+        cmake --install build
