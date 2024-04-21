@@ -16,6 +16,9 @@ inputs:
     default: false
   root-path:
     default: ${{ github.workspace }}
+  key-add:
+    descriptions: 'String to append to cache key (for dependency tracking)'
+    default: ""
 
 runs:
   using: "composite"
@@ -26,7 +29,7 @@ runs:
       if: inputs.repo-cache
       with:
         path: ${{ inputs.root-path }}/nceplibs/${{ inputs.package-name }}
-        key: ${{ inputs.package-name }}-${{ inputs.git-ref }}-${{ inputs.cmake-args }}
+        key: ${{ inputs.package-name }}-${{ inputs.git-ref }}-${{ inputs.cmake-args }}${{ inputs.key-add }}
     - name: "Check out '${{ inputs.package-name }}'"
       uses: actions/checkout@v4
       if: ${{ steps.cache-step.outputs.cache-hit != 'true' }}
