@@ -33,6 +33,7 @@ runs:
         ref: inputs.git-ref
     - name: "Build '${{ inputs.package-name }}'"
       if: steps.cache-step.outputs.cache-hit != 'true'
+      shell: bash
       run: |
         cd nceplibs-src/${{ inputs.package-name }}
         cmake -B build -DCMAKE_INSTALL_PREFIX=$GITHUB_WORKSPACE/nceplibs/${{ inputs.package-name }} ${{ inputs.cmake-args }}
