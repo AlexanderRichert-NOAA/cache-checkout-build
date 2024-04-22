@@ -1,4 +1,4 @@
-# checkout-build-cache
+# GitHub CI Action: checkout-build-cache
 
 This repository provides a GitHub Action for checking out and building CMake
 code from GitHub repositories, as well as caching the resulting code 
