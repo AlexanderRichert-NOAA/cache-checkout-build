@@ -1,4 +1,4 @@
-# GitHub CI Action: checkout-build-cache
+# GitHub CI Action: build-cmake-code
 
 This repository provides a GitHub Action for checking out and building CMake
 code from GitHub repositories, as well as caching the resulting code 
@@ -12,7 +12,7 @@ workflows.
 
 To submit bug reports, feature requests, or other code-related issues including
 usage questions, please create a [GitHub
-issue](https://github.com/NOAA-EMC/ci-checkout-build-cache/issues). For general
+issue](https://github.com/NOAA-EMC/ci-build-cmake-code/issues). For general
 NCEPLIBS inquiries, contact [Ed Hartnett](mailto:edward.hartnett@noaa.gov)
 (secondary point of contact [Alex Richert](mailto:alexander.richert@noaa.gov)).
 
@@ -25,7 +25,7 @@ NCEPLIBS inquiries, contact [Ed Hartnett](mailto:edward.hartnett@noaa.gov)
 To use this Action, include the following step in your GitHub Actions workflow:
 ```
     - name: "Build 'bacio'"
-      uses: NOAA-EMC/ci-checkout-build-cache@develop
+      uses: NOAA-EMC/ci-build-cmake-code@develop
       with:
         package-name: NCEPLIBS-bacio
         package-org: NOAA-EMC
