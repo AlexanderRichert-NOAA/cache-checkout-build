@@ -3,7 +3,9 @@
 This repository provides a GitHub Action for checking out and building CMake
 code from GitHub repositories, as well as caching the resulting code 
 (currently this is only supported for repository caches through the 
-[actions/cache](https://github.com/actions/cache) action).
+[actions/cache](https://github.com/actions/cache) action). In general, NCEP
+library CI workflows should not call this action directly, and should instead
+use https://github.com/NOAA-EMC/ci-build-nceplibs, which will call this Action.
 
 This repository supports [NCEPLIBS](https://github.com/NOAA-EMC/NCEPLIBS) CI
 workflows.
