@@ -34,7 +34,7 @@ To use this Action, include the following step in your GitHub Actions workflow:
         repo-cache: true
 ```
 
-See `actions.yml` for the full list of available options and their defaults.
+See `action.yml` for the full list of available options and their defaults.
 
 ## Disclaimer
 
