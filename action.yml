@@ -19,8 +19,11 @@ inputs:
   root-path:
     default: ${{ github.workspace }}
   key-add:
-    descriptions: 'String to append to cache key (for dependency tracking)'
+    description: 'String to append to cache key (for dependency tracking)'
     default: ""
+  nproc:
+    description: 'Number of make processes'
+    default: 2
 
 runs:
   using: "composite"
@@ -45,5 +48,5 @@ runs:
       run: |
         cd ${{ inputs.root-path }}/nceplibs-src/${{ inputs.package-name }}
         cmake -B build -DCMAKE_INSTALL_PREFIX=${{ inputs.root-path }}/nceplibs/${{ inputs.package-name }} ${{ inputs.cmake-args }}
-        cmake --build build
+        cmake --build build --parallel ${{ inputs.nproc }}
         cmake --install build
