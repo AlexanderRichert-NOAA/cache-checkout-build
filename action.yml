@@ -18,8 +18,11 @@ inputs:
     default: false
   root-path:
     default: ${{ github.workspace }}/nceplibs
-  key-add:
-    description: 'String to append to cache key (for dependency tracking)'
+  key-prefix:
+    description: 'String to prepend to cache key (for, e.g., compiler tracking)'
+    default: ""
+  key-suffix:
+    description: 'String to append to cache key (for, e.g., dependency tracking)'
     default: ""
   nproc:
     description: 'Number of make processes'
@@ -37,7 +40,7 @@ runs:
       if: ${{ inputs.repo-cache == 'true' }}
       with:
         path: ${{ inputs.root-path }}/${{ inputs.package-name }}
-        key: ${{ inputs.package-name }}-${{ inputs.git-ref }}-${{ inputs.cmake-args }}${{ inputs.key-add }}
+        key: ${{ inputs.key-prefix }}${{ inputs.package-name }}-${{ inputs.git-ref }}-${{ inputs.cmake-args }}${{ inputs.key-suffix }}
     - name: "Check out '${{ inputs.package-name }}'"
       uses: actions/checkout@v4
       if: ${{ steps.cache-step.outputs.cache-hit != 'true' }}
