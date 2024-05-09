@@ -17,7 +17,7 @@ inputs:
     description: 'Cache built packages through "actions/cache"'
     default: false
   root-path:
-    default: ${{ github.workspace }}
+    default: ${{ github.workspace }}/nceplibs
   key-add:
     description: 'String to append to cache key (for dependency tracking)'
     default: ""
@@ -36,21 +36,21 @@ runs:
       uses: actions/cache@v4
       if: inputs.repo-cache
       with:
-        path: ${{ inputs.root-path }}/nceplibs/${{ inputs.package-name }}
+        path: ${{ inputs.root-path }}/${{ inputs.package-name }}
         key: ${{ inputs.package-name }}-${{ inputs.git-ref }}-${{ inputs.cmake-args }}${{ inputs.key-add }}
     - name: "Check out '${{ inputs.package-name }}'"
       uses: actions/checkout@v4
       if: ${{ steps.cache-step.outputs.cache-hit != 'true' }}
       with:
         repository: ${{ inputs.package-org }}/${{ inputs.package-name }}
-        path: ${{ inputs.root-path }}/nceplibs-src/${{ inputs.package-name }}
+        path: ${{ inputs.root-path }}/src/${{ inputs.package-name }}
         ref: ${{ inputs.git-ref }}
         submodules: ${{ inputs.submodules }}
     - name: "Build '${{ inputs.package-name }}'"
       if: ${{ steps.cache-step.outputs.cache-hit != 'true' }}
       shell: bash
       run: |
-        cd ${{ inputs.root-path }}/nceplibs-src/${{ inputs.package-name }}
-        cmake -B build -DCMAKE_INSTALL_PREFIX=${{ inputs.root-path }}/nceplibs/${{ inputs.package-name }} ${{ inputs.cmake-args }}
+        cd ${{ inputs.root-path }}/src/${{ inputs.package-name }}
+        cmake -B build -DCMAKE_INSTALL_PREFIX=${{ inputs.root-path }}/${{ inputs.package-name }} ${{ inputs.cmake-args }}
         cmake --build build --parallel ${{ inputs.nproc }}
         cmake --install build
