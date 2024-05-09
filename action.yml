@@ -34,7 +34,7 @@ runs:
     - name: "Cache setup for '${{ inputs.package-name }}'"
       id: cache-step
       uses: actions/cache@v4
-      if: inputs.repo-cache
+      if: ${{ inputs.repo-cache == 'true' }}
       with:
         path: ${{ inputs.root-path }}/${{ inputs.package-name }}
         key: ${{ inputs.package-name }}-${{ inputs.git-ref }}-${{ inputs.cmake-args }}${{ inputs.key-add }}
