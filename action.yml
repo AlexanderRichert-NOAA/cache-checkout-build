@@ -54,6 +54,6 @@ runs:
       shell: bash
       run: |
         cd ${{ inputs.root-path }}/src/${{ inputs.package-name }}
-        cmake -B build -DCMAKE_INSTALL_PREFIX=${{ inputs.root-path }}/${{ inputs.package-name }} ${{ inputs.cmake-args }}
-        cmake --build build --parallel ${{ inputs.nproc }}
-        cmake --install build
+        cmake -B ncepbuild -DCMAKE_INSTALL_PREFIX=${{ inputs.root-path }}/${{ inputs.package-name }} ${{ inputs.cmake-args }}
+        cmake --build ncepbuild --parallel ${{ inputs.nproc }}
+        cmake --install ncepbuild
